@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technologyst Labs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css">
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --muted: #8b949e;
+  --link: #58a6ff;
+  --accent: #f0b90b;
+  --primary: #238636;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #010409;
+  border-bottom: 1px solid var(--border);
+  height: 56px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.logo-flag {
+  width: 20px;
+  height: 15px;
+  margin-right: 8px;
+}
+
+/* Repo header */
+.repo-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.repo-title {
+  font-size: 24px;
+  margin: 0;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.repo-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.repo-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.tab {
+  padding: 12px 16px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab.active {
+  color: var(--text);
+  border-bottom-color: #f78166;
+  font-weight: 600;
+}
+
+/* Layout */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Panels */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.panel-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #0d1117;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+}
+
+.btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn:hover {
+  background: #21262d;
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2ea043;
+  border-color: #2ea043;
+}
+
+/* Readme styling */
+.readme-content {
+  padding: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.readme-content h1,
+.readme-content h2,
+.readme-content h3 {
+  color: var(--text);
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.readme-content h1 {
+  font-size: 32px;
+  border-bottom: 2px solid var(--border);
+}
+
+.readme-content h2 {
+  font-size: 24px;
+}
+
+.readme-content h3 {
+  font-size: 18px;
+}
+
+.readme-content p {
+  margin-bottom: 16px;
+}
+
+.readme-content ul,
+.readme-content ol {
+  margin-bottom: 16px;
+  padding-left: 20px;
+}
+
+.readme-content li {
+  margin-bottom: 8px;
+}
+
+.readme-content strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.readme-content a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+.readme-content a:hover {
+  text-decoration: underline;
+}
+
+.readme-content img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+}
+
+.readme-content code {
+  background: rgba(240, 246, 252, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 85%;
+}
+
+.readme-content pre {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  overflow: auto;
+  margin: 16px 0;
+}
+
+.readme-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.readme-content blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 16px;
+  margin: 16px 0;
+  color: var(--muted);
+}
+
+/* Sidebar */
+.sidebar-section {
+  margin-bottom: 24px;
+}
+
+.sidebar-section:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-content {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.topic-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topic-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #21262d;
+  color: #7ee787;
+  border-radius: 999px;
+  font-size: 12px;
+  text-decoration: none;
+  border: 1px solid #30363d;
+}
+
+.topic-tag:hover {
+  background: #30363d;
+}
+
+.file-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--link);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.file-link:hover {
+  text-decoration: underline;
+}
+
+.language-bar {
+  height: 8px;
+  background: #21262d;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.language-fill {
+  height: 100%;
+  background: #fff34e;
+  border-radius: 4px;
+}
+
+.language-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.language-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff34e;
+}
+
+.language-name {
+  flex: 1;
+}
+
+.language-percent {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Badge styling */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--primary);
+  color: white;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.feature-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 12px;
+}
+
+.feature-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* Binaries Tab Styling */
+.binaries-container {
+  padding: 24px;
+}
+
+.release-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: border-color 0.2s ease;
+}
+
+.release-card:hover {
+  border-color: var(--accent);
+}
+
+.release-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.release-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+
+.release-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #238636, #2ea043);
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.release-meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.release-description {
+  color: var(--text);
+  margin: 16px 0;
+  line-height: 1.6;
+}
+
+.download-section {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.download-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.download-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+
+.download-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.download-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  background: var(--panel);
+}
+
+.download-item:last-child {
+  margin-bottom: 0;
+}
+
+.download-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.download-icon {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+.download-name {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.download-size {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.asset-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #21262d;
+  color: var(--accent);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+}
+
+.changelog-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.changelog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.changelog-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.changelog-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: #0d1117;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.changelog-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.changelog-content {
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* Content Area for tabs */
+.content-area {
+  display: block;
+}
+
+/* Footer */
+footer {
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .tabs {
+    padding: 0 16px;
+    overflow-x: auto;
+  }
+  
+  .tab {
+    white-space: nowrap;
+  }
+  
+  .repo-header {
+    padding: 16px;
+  }
+  
+  .repo-title {
+    font-size: 20px;
+  }
+  
+  .readme-content {
+    padding: 16px;
+  }
+  
+  .readme-content h1 {
+    font-size: 24px;
+  }
+  
+  .readme-content h2 {
+    font-size: 20px;
+  }
+  
+  .binaries-container {
+    padding: 16px;
+  }
+  
+  .release-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .download-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .download-item {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .sidebar {
+    margin-top: 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <img src="https://github.com/F0R3V3R50F7/m7-plugin-streamian/raw/main/images/logo.png" 
+         alt="Welsh Flag" 
+         class="logo-flag">
+    Streamian
+  </div>
+</div>
+
+<div class="tabs">
+  <a href="#" class="tab active" onclick="showTab('code')">
+    <span class="octicon octicon-code"></span> Code
+  </a>
+  <a href="#" class="tab" onclick="showTab('binaries')">
+    <span class="octicon octicon-package"></span> Binaries
+  </a>
+  <a href="#" class="tab">
+    <span class="octicon octicon-issue-opened"></span> Issues
+  </a>
+  <a href="#" class="tab">
+    <span class="octicon octicon-git-pull-request"></span> Roadmap
+  </a>
+  <a href="#" class="tab">
+    <span class="octicon octicon-book"></span> Wiki
+  </a>
+</div>
+
+<div class="main">
+  <!-- Main Content Area -->
+  <div class="content-area">
+    <!-- Code Tab (Default) -->
+    <div id="code-tab">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Code</h2>
+          <div>
+            <button class="btn">
+              <span class="octicon octicon-clippy"></span> Copy
+            </button>
+            <button class="btn">
+              <span class="octicon octicon-desktop-download"></span> Download
+            </button>
+          </div>
+        </div>
+        <div class="readme-content">
+          Code not available.
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="octicon octicon-book"></span> README.md
+          </h2>
+        </div>
+        <div class="readme-content">
+          <h1>Streamian</h1>
+          
+          <p><strong>All-In-One Simple & Automated Streaming Platform | M7/Movian Media Center | Playstation 3</strong></p>
+          
+          <img src="/images/logo.png" alt="Streamian Logo" style="max-height: 200px;">
+          
+          <h2>Features</h2>
+          
+          <ul class="feature-list">
+            <li>Supports TPB, EZTV, YTS and Archive.org. Plus you can create your own addons then add them in the settings page. I will create a guide for this soon.</li>
+            <li>Save Your Favorite Shows, Movies & Channels to Your Library!</li>
+            <li>Filter Out H.265 Videos! (For Playstation 3) / older Android Devices</li>
+            <li>Automatically Picks the Best Source Based On Your Preferred Video Quality & Seeder Count!</li>
+            <li>Use Together with Official Movian/M7 Subtitles Addons!</li>
+            <li>Browse a range of Free-To-Air TV Channel Providers like Pluto TV, Redbox and more!</li>
+          </ul>
+          
+          <h2>How to Install (Official Plugin Repository)</h2>
+          
+          <ol>
+            <li>Navigate to <strong>Plugins > Browse Available Plugins > Video Streaming > Streamian</strong></li>
+            <li>Select <strong>Install</strong>.</li>
+            <li>Return to Movian/M7 Home and select <strong>Streamian</strong>.</li>
+            <li>From Streamian, open the side menu and select <strong>"Update Streamian"</strong>.</li>
+          </ol>
+          
+          <p><em>Note: Open the side menu from any page inside Streamian and select "Update Streamian" periodically to recieve updates.</em></p>
+          
+          <p>
+            <a href="/streamian_stable.zip?raw=true" class="file-link">
+              <span class="octicon octicon-package"></span> Stable-Release plugin.zip Download (Latest Version)
+            </a>
+          </p>
+          
+          <h2>Channel Information</h2>
+          
+          <h3>Serves:</h3>
+          <ul>
+            <li>United States 🇺🇸</li>
+            <li>United Kingdom 🇬🇧</li>
+            <li>France 🇫🇷</li>
+            <li>Canada 🇨🇦</li>
+            <li>Brazil 🇧🇷</li>
+            <li>South Korea 🇰🇷</li>
+            <li>Mexico 🇲🇽</li>
+            <li>Chile 🇨🇱</li>
+            <li>Germany 🇩🇪</li>
+            <li>Switzerland 🇨🇭</li>
+            <li>Denmark 🇩🇰</li>
+            <li>Spain 🇪🇸</li>
+            <li>Sweden 🇸🇪</li>
+            <li>Austria 🇦🇹</li>
+            <li>Italy 🇮🇹</li>
+            <li>India 🇮🇳</li>
+            <li>Norway 🇳🇴</li>
+          </ul>
+          
+          <h3>Providers:</h3>
+          <ul>
+            <li>OTA TV / Terrestrial Television (Via FreeTV on GitHub)</li>
+            <li>Pluto TV (Embedded)</li>
+            <li>Rakuten TV (Via Apsattv)</li>
+            <li>Samsung TV Plus (Embedded)</li>
+            <li>Redbox TV (Via Apsattv)</li>
+            <li>redtraffic.net (18+)</li>
+            <li>MyCamTV (18+)</li>
+          </ul>
+          
+          <h2>Available Plugin Languages</h2>
+          <ul>
+            <li>English</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Binaries Tab (Hidden by default) -->
+    <div id="binaries-tab" style="display: none;">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="octicon octicon-package"></span> Releases
+          </h2>
+        </div>
+        <div class="binaries-container">
+          <!-- Latest Release -->
+          <div class="release-card">
+            <div class="release-header">
+              <div>
+                <h3 class="release-title">
+                  Stable Release v2.0.1
+                  <span class="release-tag">Latest</span>
+                </h3>
+                <div class="release-meta">
+                  <span class="octicon octicon-tag"></span> v2.0.1
+                  <span style="margin: 0 8px">•</span>
+                  <span class="octicon octicon-calendar"></span> Released on December 15, 2024
+                </div>
+              </div>
+            </div>
+            
+            <div class="release-description">
+              <p>This is the latest stable release of Streamian with all major bugs fixed and new features added.</p>
+              <p><strong>Changes in this release:</strong></p>
+              <ul>
+                <li>Improved video source selection algorithm</li>
+                <li>Added support for new streaming providers</li>
+                <li>Fixed memory leak in player</li>
+                <li>Updated UI with dark mode improvements</li>
+              </ul>
+            </div>
+            
+            <div class="download-section">
+              <div class="download-header">
+                <h4 class="download-title">Downloads</h4>
+              </div>
+              <ul class="download-list">
+                <li class="download-item">
+                  <div class="download-info">
+                    <span class="octicon octicon-package download-icon"></span>
+                    <div>
+                      <div class="download-name">streamian_stable.zip</div>
+                      <div class="download-size">15.4 MB</div>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="asset-badge">Plugin</span>
+                    <a href="/streamian_stable.zip?raw=true" class="btn btn-primary" style="padding: 6px 12px;">
+                      <span class="octicon octicon-desktop-download"></span> Download
+                    </a>
+                  </div>
+                </li>
+                <li class="download-item">
+                  <div class="download-info">
+                    <span class="octicon octicon-file-zip download-icon"></span>
+                    <div>
+                      <div class="download-name">source_code.zip</div>
+                      <div class="download-size">8.2 MB</div>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="asset-badge">Source code</span>
+                    <a href="/source_code.zip?raw=true" class="btn" style="padding: 6px 12px;">
+                      <span class="octicon octicon-desktop-download"></span> Download
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar (Always visible) -->
+  <div class="sidebar">
+    <div class="panel sidebar-section">
+      <div class="panel-header">
+        <h2 class="panel-title">About</h2>
+        <button class="btn">
+          <span class="octicon octicon-gear"></span>
+        </button>
+      </div>
+      <div style="padding: 16px;">
+        <p class="sidebar-content">All-In-One Simple & Automated Streaming Platform | M7/Movian Media Center | Playstation 3</p>
+        
+        <h3 style="margin: 16px 0 8px; font-size: 14px; font-weight: 600; color: var(--text);">Topics</h3>
+        <div class="topic-list">
+          <a href="#" class="topic-tag">PS3</a>
+          <a href="#" class="topic-tag">movian</a>
+          <a href="#" class="topic-tag">m7</a>
+        </div>
+        
+        <div style="margin-top: 16px;">
+          <a href="#" class="file-link">
+            <span class="octicon octicon-book"></span> Readme
+          </a>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <a href="#" class="file-link">
+            <span class="octicon octicon-law"></span> MPL-2.0 license
+          </a>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <a href="#" class="file-link" onclick="showTab('binaries')">
+            <span class="octicon octicon-package"></span> Releases
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel sidebar-section">
+      <div class="panel-header">
+        <h2 class="panel-title">Languages</h2>
+      </div>
+      <div style="padding: 16px;">
+        <div class="language-bar">
+          <div class="language-fill" style="width: 100%"></div>
+        </div>
+        <ul class="language-list">
+          <li class="language-item">
+            <span class="language-color"></span>
+            <span class="language-name">JavaScript</span>
+            <span class="language-percent">100.0%</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2024 Technologyst Labs. All rights reserved.
+</footer>
+
+<script>
+function showTab(tabName) {
+  // Hide all tabs
+  document.getElementById('code-tab').style.display = 'none';
+  document.getElementById('binaries-tab').style.display = 'none';
+  
+  // Remove active class from all tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  // Show selected tab and add active class
+  document.getElementById(tabName + '-tab').style.display = 'block';
+  event.target.classList.add('active');
+  
+  // Prevent default link behavior
+  event.preventDefault();
+  return false;
+}
+
+// Set initial active tab
+document.addEventListener('DOMContentLoaded', function() {
+  // Code tab is visible by default
+  document.getElementById('code-tab').style.display = 'block';
+  document.getElementById('binaries-tab').style.display = 'none';
+});
+</script>
+
+</body>
+</html>
