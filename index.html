@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Technologyst Labs</title>
+<title>Streamian - F0R3V3R50F7</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 <style>
 :root {
   --bg: #0d1117;
@@ -16,6 +18,8 @@
   --accent: #f0b90b;
   --primary: #238636;
   --white: #ffffff;
+  --warning: #d29922;
+  --danger: #f85149;
 }
 
 * {
@@ -29,16 +33,21 @@ body {
   color: var(--text);
   font-size: 14px;
   line-height: 1.5;
+  min-height: 100vh;
 }
 
 /* Top bar */
 .topbar {
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  justify-content: space-between;
+  padding: 8px 24px;
   background: #010409;
   border-bottom: 1px solid var(--border);
   height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .logo {
@@ -46,40 +55,82 @@ body {
   align-items: center;
   font-weight: 700;
   color: var(--white);
+  font-size: 18px;
+  gap: 8px;
 }
 
-.logo-flag {
-  width: 20px;
-  height: 15px;
-  margin-right: 8px;
+.logo-icon {
+  color: var(--accent);
 }
 
 /* Repo header */
 .repo-header {
-  padding: 20px 24px;
+  padding: 24px;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
 }
 
 .repo-title {
-  font-size: 24px;
-  margin: 0;
+  font-size: 32px;
+  margin: 0 0 8px 0;
   color: var(--text);
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.repo-subtitle {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0 0 20px 0;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+.repo-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  gap: 4px;
+}
+
+.badge.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
 }
 
 .repo-meta {
   display: flex;
-  gap: 16px;
-  margin-top: 8px;
+  gap: 24px;
+  margin-top: 20px;
   font-size: 14px;
   color: var(--muted);
+  flex-wrap: wrap;
 }
 
 .repo-meta-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+}
+
+.repo-meta-item .octicon {
+  font-size: 16px;
 }
 
 /* Tabs */
@@ -88,27 +139,34 @@ body {
   padding: 0 24px;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
+  position: sticky;
+  top: 56px;
+  z-index: 90;
+  backdrop-filter: blur(10px);
 }
 
 .tab {
-  padding: 12px 16px;
+  padding: 16px 20px;
   color: var(--muted);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .tab:hover {
   color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .tab.active {
   color: var(--text);
-  border-bottom-color: #f78166;
+  border-bottom-color: var(--accent);
   font-weight: 600;
 }
 
@@ -120,19 +178,20 @@ body {
   padding: 24px;
   max-width: 1280px;
   margin: 0 auto;
+  min-height: calc(100vh - 200px);
 }
 
 /* Panels */
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .panel-header {
-  padding: 12px 16px;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--border);
   background: #0d1117;
   display: flex;
@@ -145,10 +204,13 @@ body {
   font-weight: 600;
   margin: 0;
   color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn {
-  padding: 6px 12px;
+  padding: 8px 16px;
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--text);
@@ -158,11 +220,15 @@ body {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  transition: all 0.2s ease;
+  text-decoration: none;
 }
 
 .btn:hover {
   background: #21262d;
+  border-color: var(--muted);
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -176,7 +242,17 @@ body {
   border-color: #2ea043;
 }
 
-/* Readme styling */
+.btn-small {
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+/* Content Area */
+.content-area {
+  display: block;
+}
+
+/* Readme styling - RESTORED */
 .readme-content {
   padding: 24px;
   font-size: 14px;
@@ -271,112 +347,6 @@ body {
   color: var(--muted);
 }
 
-/* Sidebar */
-.sidebar-section {
-  margin-bottom: 24px;
-}
-
-.sidebar-section:last-child {
-  margin-bottom: 0;
-}
-
-.sidebar-content {
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.topic-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.topic-tag {
-  display: inline-block;
-  padding: 4px 12px;
-  background: #21262d;
-  color: #7ee787;
-  border-radius: 999px;
-  font-size: 12px;
-  text-decoration: none;
-  border: 1px solid #30363d;
-}
-
-.topic-tag:hover {
-  background: #30363d;
-}
-
-.file-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--link);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.file-link:hover {
-  text-decoration: underline;
-}
-
-.language-bar {
-  height: 8px;
-  background: #21262d;
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 8px 0;
-}
-
-.language-fill {
-  height: 100%;
-  background: #fff34e;
-  border-radius: 4px;
-}
-
-.language-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.language-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.language-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff34e;
-}
-
-.language-name {
-  flex: 1;
-}
-
-.language-percent {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-/* Badge styling */
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  background: var(--primary);
-  color: white;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-right: 8px;
-}
-
 .feature-list {
   list-style: none;
   padding-left: 0;
@@ -396,8 +366,8 @@ body {
   font-weight: bold;
 }
 
-/* Binaries Tab Styling */
-.binaries-container {
+/* Releases Tab - RESTORED TO ORIGINAL */
+.Releases-container {
   padding: 24px;
 }
 
@@ -566,44 +536,311 @@ body {
   font-size: 14px;
 }
 
-/* Content Area for tabs */
-.content-area {
-  display: block;
+/* Wiki Tab Styling */
+.wiki-container {
+  padding: 24px;
+}
+
+.wiki-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wiki-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.wiki-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+.wiki-subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 24px 0 12px 0;
+}
+
+.wiki-content {
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.wiki-content p {
+  margin-bottom: 16px;
+}
+
+.wiki-content ul, .wiki-content ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.wiki-content li {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.wiki-content li:before {
+  content: "•";
+  color: var(--accent);
+  font-weight: bold;
+  position: absolute;
+  left: -15px;
+}
+
+.wiki-note {
+  background: rgba(240, 185, 11, 0.1);
+  border-left: 4px solid var(--accent);
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: 4px;
+}
+
+.wiki-warning {
+  background: rgba(210, 153, 34, 0.1);
+  border-left: 4px solid var(--warning);
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: 4px;
+}
+
+.wiki-code-block {
+  position: relative;
+  margin: 16px 0;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.wiki-code-block pre {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  overflow: auto;
+  margin: 0;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.wiki-code-block code {
+  background: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #161b22;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.code-lang {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Sidebar */
+.sidebar-section {
+  margin-bottom: 24px;
+}
+
+.sidebar-section:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-content {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.topic-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topic-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #21262d;
+  color: #7ee787;
+  border-radius: 999px;
+  font-size: 12px;
+  text-decoration: none;
+  border: 1px solid #30363d;
+  transition: all 0.2s ease;
+}
+
+.topic-tag:hover {
+  background: #30363d;
+  transform: translateY(-1px);
+}
+
+.file-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--link);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.file-link:hover {
+  text-decoration: none;
+  background: rgba(88, 166, 255, 0.1);
+}
+
+.language-bar {
+  height: 8px;
+  background: #21262d;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.language-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+.language-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.language-item:hover {
+  background: #21262d;
+}
+
+.language-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.language-name {
+  flex: 1;
+  font-size: 13px;
+}
+
+.language-percent {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /* Footer */
 footer {
-  padding: 24px;
+  padding: 32px 24px;
   color: var(--muted);
   text-align: center;
   border-top: 1px solid var(--border);
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 40px;
+  background: #010409;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--text);
+  text-decoration: underline;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .main {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 20px;
+  }
+  
+  .sidebar {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
     padding: 16px;
+    gap: 16px;
   }
   
   .tabs {
     padding: 0 16px;
     overflow-x: auto;
+    top: 56px;
   }
   
   .tab {
     white-space: nowrap;
+    padding: 14px 16px;
   }
   
   .repo-header {
-    padding: 16px;
+    padding: 20px 16px;
   }
   
   .repo-title {
-    font-size: 20px;
+    font-size: 24px;
+  }
+  
+  .repo-subtitle {
+    font-size: 14px;
+  }
+  
+  .repo-meta {
+    gap: 16px;
+  }
+  
+  .topbar {
+    padding: 8px 16px;
   }
   
   .readme-content {
@@ -618,7 +855,7 @@ footer {
     font-size: 20px;
   }
   
-  .binaries-container {
+  .Releases-container {
     padding: 16px;
   }
   
@@ -642,6 +879,62 @@ footer {
   .sidebar {
     margin-top: 16px;
   }
+  
+  .wiki-container {
+    padding: 16px;
+  }
+  
+  .wiki-title {
+    font-size: 20px;
+  }
+  
+  .wiki-subtitle {
+    font-size: 16px;
+  }
+  
+  .panel-header {
+    padding: 14px 16px;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Animation for tab switching */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-area > div {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
 }
 </style>
 </head>
@@ -650,28 +943,64 @@ footer {
 
 <div class="topbar">
   <div class="logo">
-    <img src="https://github.com/F0R3V3R50F7/m7-plugin-streamian/raw/main/images/logo.png" 
-         alt="Welsh Flag" 
-         class="logo-flag">
+    <span class="octicon octicon-device-camera-video logo-icon"></span>
     Streamian
   </div>
 </div>
+
+<header class="repo-header">
+  <h1 class="repo-title">
+    <span class="octicon octicon-repo"></span>
+    Streamian
+  </h1>
+  <p class="repo-subtitle">All-In-One Simple & Automated Streaming Platform for M7/Movian Media Center & PlayStation 3</p>
+  
+  <div class="repo-badges">
+    <span class="badge primary">
+      <span class="octicon octicon-tag"></span>
+      Stable v9.3
+    </span>
+    <span class="badge">
+      <span class="octicon octicon-law"></span>
+      MIT License
+    </span>
+    <span class="badge">
+      <span class="octicon octicon-device-desktop"></span>
+      PlayStation 3 Compatible
+    </span>
+  </div>
+  
+  <div class="repo-meta">
+    <div class="repo-meta-item">
+      <span class="octicon octicon-calendar"></span>
+      Updated December 15, 2024
+    </div>
+    <div class="repo-meta-item">
+      <span class="octicon octicon-download"></span>
+      2.17 MB Plugin
+    </div>
+    <div class="repo-meta-item">
+      <span class="octicon octicon-code"></span>
+      JavaScript 100%
+    </div>
+  </div>
+</header>
 
 <div class="tabs">
   <a href="#" class="tab active" onclick="showTab('code')">
     <span class="octicon octicon-code"></span> Code
   </a>
-  <a href="#" class="tab" onclick="showTab('binaries')">
-    <span class="octicon octicon-package"></span> Binaries
+  <a href="#" class="tab" onclick="showTab('Releases')">
+    <span class="octicon octicon-package"></span> Releases
   </a>
-  <a href="#" class="tab">
+  <a href="#" class="tab" onclick="showTab('wiki')">
+    <span class="octicon octicon-book"></span> Wiki
+  </a>
+  <a href="#" class="tab" onclick="showTab('issues')">
     <span class="octicon octicon-issue-opened"></span> Issues
   </a>
-  <a href="#" class="tab">
+  <a href="#" class="tab" onclick="showTab('roadmap')">
     <span class="octicon octicon-git-pull-request"></span> Roadmap
-  </a>
-  <a href="#" class="tab">
-    <span class="octicon octicon-book"></span> Wiki
   </a>
 </div>
 
@@ -682,20 +1011,36 @@ footer {
     <div id="code-tab">
       <div class="panel">
         <div class="panel-header">
-          <h2 class="panel-title">Code</h2>
+          <h2 class="panel-title">
+            <span class="octicon octicon-code"></span> Code
+          </h2>
           <div>
-            <button class="btn">
-              <span class="octicon octicon-clippy"></span> Copy
-            </button>
             <button class="btn">
               <span class="octicon octicon-desktop-download"></span> Download
             </button>
           </div>
         </div>
-        <div class="readme-content">
-          Code not available.
+        <div class="wiki-code-block">
+              <pre><code class="javascript">/*| Streamian plugin for Movian/M7 Media Center | © 2025 F0R3V3R50F7 |*/
+
+// Core Modules
+var page = require('movian/page');
+var service = require('movian/service');
+var settings = require('movian/settings');
+var http = require('movian/http');
+var metadata = require('metadata');
+var stream = require('stream');
+var channels = require('channels');
+
+// Data Stores
+var library = store.create('library');
+var channelhistory = store.create('channelhistory');
+var ondemandhistory = store.create('ondemandhistory');
+var otalibrary = store.create('otalibrary');
+var playlists = store.create('playlists');
+...</code></pre>
+            </div>
         </div>
-      </div>
 
       <div class="panel">
         <div class="panel-header">
@@ -704,39 +1049,20 @@ footer {
           </h2>
         </div>
         <div class="readme-content">
-          <h1>Streamian</h1>
+          <p><strong>All-In-One Simple & Automated Streaming Platform | M7/Movian Media Center | PlayStation 3</strong></p>
           
-          <p><strong>All-In-One Simple & Automated Streaming Platform | M7/Movian Media Center | Playstation 3</strong></p>
-          
-          <img src="/images/logo.png" alt="Streamian Logo" style="max-height: 200px;">
+          <img src="https://ia601403.us.archive.org/27/items/logo_20251227/logo.png" alt="Streamian Logo" style="max-height: 200px;">
           
           <h2>Features</h2>
           
           <ul class="feature-list">
             <li>Supports TPB, EZTV, YTS and Archive.org. Plus you can create your own addons then add them in the settings page. I will create a guide for this soon.</li>
             <li>Save Your Favorite Shows, Movies & Channels to Your Library!</li>
-            <li>Filter Out H.265 Videos! (For Playstation 3) / older Android Devices</li>
+            <li>Filter Out H.265 Videos! (For PlayStation 3) / older Android Devices</li>
             <li>Automatically Picks the Best Source Based On Your Preferred Video Quality & Seeder Count!</li>
             <li>Use Together with Official Movian/M7 Subtitles Addons!</li>
             <li>Browse a range of Free-To-Air TV Channel Providers like Pluto TV, Redbox and more!</li>
           </ul>
-          
-          <h2>How to Install (Official Plugin Repository)</h2>
-          
-          <ol>
-            <li>Navigate to <strong>Plugins > Browse Available Plugins > Video Streaming > Streamian</strong></li>
-            <li>Select <strong>Install</strong>.</li>
-            <li>Return to Movian/M7 Home and select <strong>Streamian</strong>.</li>
-            <li>From Streamian, open the side menu and select <strong>"Update Streamian"</strong>.</li>
-          </ol>
-          
-          <p><em>Note: Open the side menu from any page inside Streamian and select "Update Streamian" periodically to recieve updates.</em></p>
-          
-          <p>
-            <a href="/streamian_stable.zip?raw=true" class="file-link">
-              <span class="octicon octicon-package"></span> Stable-Release plugin.zip Download (Latest Version)
-            </a>
-          </p>
           
           <h2>Channel Information</h2>
           
@@ -780,25 +1106,25 @@ footer {
       </div>
     </div>
 
-    <!-- Binaries Tab (Hidden by default) -->
-    <div id="binaries-tab" style="display: none;">
+    <!-- Releases Tab -->
+    <div id="Releases-tab" style="display: none;">
       <div class="panel">
         <div class="panel-header">
           <h2 class="panel-title">
             <span class="octicon octicon-package"></span> Releases
           </h2>
         </div>
-        <div class="binaries-container">
+        <div class="Releases-container">
           <!-- Latest Release -->
           <div class="release-card">
             <div class="release-header">
               <div>
                 <h3 class="release-title">
-                  Stable Release v2.0.1
+                  Stable Release v9.3
                   <span class="release-tag">Latest</span>
                 </h3>
                 <div class="release-meta">
-                  <span class="octicon octicon-tag"></span> v2.0.1
+                  <span class="octicon octicon-tag"></span> v9.3
                   <span style="margin: 0 8px">•</span>
                   <span class="octicon octicon-calendar"></span> Released on December 15, 2024
                 </div>
@@ -809,10 +1135,7 @@ footer {
               <p>This is the latest stable release of Streamian with all major bugs fixed and new features added.</p>
               <p><strong>Changes in this release:</strong></p>
               <ul>
-                <li>Improved video source selection algorithm</li>
-                <li>Added support for new streaming providers</li>
-                <li>Fixed memory leak in player</li>
-                <li>Updated UI with dark mode improvements</li>
+                <li>Moved to new website</li>
               </ul>
             </div>
             
@@ -826,27 +1149,12 @@ footer {
                     <span class="octicon octicon-package download-icon"></span>
                     <div>
                       <div class="download-name">streamian_stable.zip</div>
-                      <div class="download-size">15.4 MB</div>
+                      <div class="download-size">2.17 MB</div>
                     </div>
                   </div>
                   <div>
-                    <span class="asset-badge">Plugin</span>
-                    <a href="/streamian_stable.zip?raw=true" class="btn btn-primary" style="padding: 6px 12px;">
-                      <span class="octicon octicon-desktop-download"></span> Download
-                    </a>
-                  </div>
-                </li>
-                <li class="download-item">
-                  <div class="download-info">
-                    <span class="octicon octicon-file-zip download-icon"></span>
-                    <div>
-                      <div class="download-name">source_code.zip</div>
-                      <div class="download-size">8.2 MB</div>
-                    </div>
-                  </div>
-                  <div>
-                    <span class="asset-badge">Source code</span>
-                    <a href="/source_code.zip?raw=true" class="btn" style="padding: 6px 12px;">
+                    <span class="asset-badge">Movian/M7 Plugin</span>
+                    <a href="https://raw.githubusercontent.com/F0R3V3R50F7/m7-plugin-streamian/refs/heads/main/streamian_stable.zip" class="btn btn-primary" style="padding: 6px 12px;">
                       <span class="octicon octicon-desktop-download"></span> Download
                     </a>
                   </div>
@@ -857,19 +1165,223 @@ footer {
         </div>
       </div>
     </div>
+
+    <!-- Wiki Tab -->
+    <div id="wiki-tab" style="display: none;">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="octicon octicon-book"></span> Streamian Wiki
+          </h2>
+        </div>
+        <div class="wiki-container">
+          <div class="wiki-section">
+            <h2 class="wiki-title">Getting Started</h2>
+            
+            <div class="wiki-content">
+              <h3 class="wiki-subtitle">System Requirements</h3>
+              <ul>
+                <li><strong>M7/Movian Media Center:</strong> Version 7.0.157 or higher</li>
+                <li><strong>PlayStation 3:</strong> CFW with Movian installed</li>
+                <li><strong>Android:</strong> Movian app from movian.eu</li>
+                <li><strong>Internet Connection:</strong> Minimum 10 Mbps for SD, 20 Mbps for HD</li>
+              </ul>
+              
+              <h3 class="wiki-subtitle">Installation Guide</h3>
+              
+              <div class="wiki-warning">
+                <p><strong>Important:</strong> Note: Open the side menu from any page inside Streamian and select "Update Streamian" periodically to recieve updates.</p>
+              </div>
+              
+              <p><strong>Method 1: Official Repository (Recommended)</strong></p>
+              <ol>
+                <li>Launch Movian/M7 Media Center</li>
+                <li>Navigate to <code>Plugins → Browse Available Plugins</code></li>
+                <li>Select <code>Video Streaming</code> category</li>
+                <li>Find and select <code>Streamian</code></li>
+                <li>Click <code>Install</code> and wait for completion</li>
+              </ol>
+              
+              <p><strong>Method 2: Manual Installation</strong></p>
+              <ol>
+                <li>Download the latest <code>streamian_stable.zip</code> from the Releases tab</li>
+                <li>Transfer the ZIP file to your device</li>
+                <li>In Movian/M7, go to <code>Your Device → find Streamian</code></li>
+                <li>Click <code>Install</code> and wait for completion</li>
+              </ol>
+            </div>
+          </div>
+          
+          <div class="wiki-section">
+            <h2 class="wiki-title">Configuration & Settings</h2>
+            
+            <div class="wiki-content">
+              <h3 class="wiki-subtitle">Streaming Settings</h3>
+              
+              <h3 class="wiki-subtitle">Recommended Settings for PlayStation 3</h3>
+              <ul>
+                <li><strong>Video Quality:</strong> HD 1080p</li>
+                <li><strong>H.265 Filter:</strong> ALWAYS ENABLED (PlayStation 3 Cannot Display h.265)</li>
+                <li><strong>Minimum Seeders:</strong> At leaast 20+ for reliable streaming</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="wiki-section">
+            <h2 class="wiki-title">Advanced Usage</h2>
+            
+            <div class="wiki-content">
+              <h3 class="wiki-subtitle">Creating Custom Addons</h3>
+              <p>Streamian supports custom scraper addons. Create a JavaScript file with the following structure:</p>
+              
+              <div class="wiki-code-block">
+                <div class="code-header">
+                  <span class="code-lang">JavaScript</span>
+                  <button class="btn btn-small" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code class="javascript">// Example custom addon structure
+(function() {
+  var service = require('movian/service');
+  var http = require('movian/http');
+  
+  // Register your addon
+  service.create('My Custom Addon', 'custom:start', 'video', true, 'icon.png');
+  
+  // Add scraping logic
+  function scrapeContent(query, type) {
+    // Your scraping logic here
+    return [
+      {
+        title: "Example Video",
+        url: "magnet:?xt=...",
+        seeders: 50
+      }
+    ];
+  }
+  
+  // Export functions
+  exports.scrape = scrapeContent;
+})();</code></pre>
+              </div>
+              
+              <h3 class="wiki-subtitle">Library Management</h3>
+              <ul>
+                <li><strong>Adding Content:</strong> Right-click (or long-press) any show/movie and select "Add to Library"</li>
+                <li><strong>Organizing:</strong> Library automatically categorizes by type (Shows/Movies/Channels)</li>
+                <li><strong>History:</strong> Watch history is maintained separately for on-demand and live channels</li>
+                <li><strong>Backup:</strong> Export your library via Settings → Data Management</li>
+              </ul>
+              
+              <h3 class="wiki-subtitle">Troubleshooting</h3>
+              
+              <div class="wiki-warning">
+                <p><strong>Common Issues:</strong></p>
+                <ul>
+                  <li><strong>No streams found:</strong> Check your addon URLs in settings or ISP blocking</li>
+                  <li><strong>Playback errors on PS3:</strong> Enable H.265 filter and reduce quality settings</li>
+                  <li><strong>Channels not loading:</strong> Verify region detection in log (Enable Debug)</li>
+                  <li><strong>Movian/M7 Crashing</strong> Reinstall Movian/M7</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="wiki-section">
+            <h2 class="wiki-title">FAQ</h2>
+            
+            <div class="wiki-content">
+              <h3 class="wiki-subtitle">General Questions</h3>
+              
+              <p><strong>Q: Is Streamian legal to use?</strong><br>
+              A: Streamian is a media aggregation plugin. The legality depends on your location and the content you access. Always respect copyright laws.</p>
+              
+              <p><strong>Q: Does it work on jailbroken PlayStation 3?</strong><br>
+              A: Yes, Streamian is fully compatible with PS3 running custom firmware with Movian installed.</p>
+              
+              <p><strong>Q: Can I add my own streaming sources?</strong><br>
+              A: Yes, via the custom addon slots in settings or by creating M3U playlists for live channels.</p>
+              
+              <p><strong>Q: How often should I update?</strong><br>
+              A: Check for updates monthly or when features stop working. Use the "Update Streamian" option in the side menu.</p>
+              
+              <p><strong>Q: Is there a Discord or support community?</strong><br>
+              A: Yes, join the discussion at r/movian on Reddit for support and updates.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Issues Tab -->
+    <div id="issues-tab" style="display: none;">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="octicon octicon-issue-opened"></span> Issues
+          </h2>
+        </div>
+        <div class="wiki-container">
+          <div class="wiki-section">
+            
+            <div class="wiki-content">
+              
+              <h3 class="wiki-subtitle">High Priority (3)</h3>
+              <ul>
+              </ul>
+              
+              <h3 class="wiki-subtitle">Medium Priority (2)</h3>
+              <ul>
+                <li><strong>#02</strong> Stream scout often selects wrong content with similar name</li>
+                <li><strong>#01</strong> PS3 H.265 filter occasionally allows incompatible streams</li>
+              </ul>
+              
+              <h3 class="wiki-subtitle">Low Priority (0)</h3>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roadmap Tab -->
+    <div id="roadmap-tab" style="display: none;">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span class="octicon octicon-git-pull-request"></span> Development Roadmap
+          </h2>
+        </div>
+        <div class="wiki-container">
+          <div class="wiki-section">
+            <h2 class="wiki-title">Upcoming Features</h2>
+            
+            <div class="wiki-content">
+              <h3 class="wiki-subtitle">Q1 2026</h3>
+              <ul>
+                <li><strong>v2.1.0</strong> - Improved source selection</li>
+              </ul>
+              
+              <div class="wiki-note">
+                <p><strong>Note:</strong> Roadmap is subject to change based on community feedback and development resources. Priorities may shift to address critical issues.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Sidebar (Always visible) -->
+  <!-- Sidebar -->
   <div class="sidebar">
     <div class="panel sidebar-section">
       <div class="panel-header">
         <h2 class="panel-title">About</h2>
-        <button class="btn">
+        <button class="btn btn-small">
           <span class="octicon octicon-gear"></span>
         </button>
       </div>
-      <div style="padding: 16px;">
-        <p class="sidebar-content">All-In-One Simple & Automated Streaming Platform | M7/Movian Media Center | Playstation 3</p>
+      <div style="padding: 20px;">
+        <p class="sidebar-content">All-In-One Simple & Automated Streaming Platform for M7/Movian Media Center & PlayStation 3</p>
         
         <h3 style="margin: 16px 0 8px; font-size: 14px; font-weight: 600; color: var(--text);">Topics</h3>
         <div class="topic-list">
@@ -886,12 +1398,12 @@ footer {
         
         <div style="margin-top: 8px;">
           <a href="#" class="file-link">
-            <span class="octicon octicon-law"></span> MPL-2.0 license
+            <span class="octicon octicon-law"></span> MIT license
           </a>
         </div>
         
         <div style="margin-top: 8px;">
-          <a href="#" class="file-link" onclick="showTab('binaries')">
+          <a href="#" class="file-link" onclick="showTab('Releases')">
             <span class="octicon octicon-package"></span> Releases
           </a>
         </div>
@@ -902,7 +1414,7 @@ footer {
       <div class="panel-header">
         <h2 class="panel-title">Languages</h2>
       </div>
-      <div style="padding: 16px;">
+      <div style="padding: 20px;">
         <div class="language-bar">
           <div class="language-fill" style="width: 100%"></div>
         </div>
@@ -916,18 +1428,34 @@ footer {
       </div>
     </div>
   </div>
-
 </div>
 
 <footer>
-  © 2024 Technologyst Labs. All rights reserved.
+  <div class="footer-links">
+    <a href="#" class="footer-link" onclick="showTab('code')">Code</a>
+    <a href="#" class="footer-link" onclick="showTab('wiki')">Documentation</a>
+    <a href="#" class="footer-link" onclick="showTab('issues')">Issues</a>
+    <a href="#" class="footer-link" onclick="showTab('roadmap')">Roadmap</a>
+  </div>
+  <div style="color: var(--muted);">
+    © 2026 F0R3V3R50F7. All rights reserved.
+    <span style="margin: 0 8px">•</span>
+    Streamian is not affiliated with Movian, PlayStation, or any streaming service.
+    <span style="margin: 0 8px">•</span>
+    Use at your own discretion.
+  </div>
 </footer>
 
 <script>
+// Initialize syntax highlighting
+hljs.highlightAll();
+
 function showTab(tabName) {
   // Hide all tabs
-  document.getElementById('code-tab').style.display = 'none';
-  document.getElementById('binaries-tab').style.display = 'none';
+  const tabs = ['code', 'Releases', 'wiki', 'issues', 'roadmap'];
+  tabs.forEach(tab => {
+    document.getElementById(tab + '-tab').style.display = 'none';
+  });
   
   // Remove active class from all tabs
   document.querySelectorAll('.tab').forEach(tab => {
@@ -936,18 +1464,88 @@ function showTab(tabName) {
   
   // Show selected tab and add active class
   document.getElementById(tabName + '-tab').style.display = 'block';
-  event.target.classList.add('active');
+  
+  // Find and activate the clicked tab
+  const clickedTab = event.target.closest('.tab');
+  if (clickedTab) {
+    clickedTab.classList.add('active');
+  }
+  
+  // Update URL hash
+  window.location.hash = tabName;
   
   // Prevent default link behavior
   event.preventDefault();
   return false;
 }
 
-// Set initial active tab
+// Copy code function
+function copyCode(button) {
+  const codeBlock = button.closest('.wiki-code-block').querySelector('pre code');
+  const text = codeBlock.textContent;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = button.innerHTML;
+    button.innerHTML = '<span class="octicon octicon-check"></span> Copied!';
+    button.classList.add('btn-primary');
+    
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.classList.remove('btn-primary');
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy text: ', err);
+  });
+}
+
+// Set initial active tab based on URL hash
 document.addEventListener('DOMContentLoaded', function() {
-  // Code tab is visible by default
-  document.getElementById('code-tab').style.display = 'block';
-  document.getElementById('binaries-tab').style.display = 'none';
+  // Default to code tab
+  let initialTab = 'code';
+  
+  // Check URL hash
+  if (window.location.hash) {
+    const hash = window.location.hash.substring(1);
+    if (['code', 'Releases', 'wiki', 'issues', 'roadmap'].includes(hash)) {
+      initialTab = hash;
+    }
+  }
+  
+  // Show the initial tab
+  document.getElementById(initialTab + '-tab').style.display = 'block';
+  
+  // Activate the corresponding tab
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.classList.remove('active');
+    if (tab.textContent.includes(initialTab.charAt(0).toUpperCase() + initialTab.slice(1))) {
+      tab.classList.add('active');
+    }
+  });
+  
+  // Initialize all tab contents as hidden except initial
+  ['code', 'Releases', 'wiki', 'issues', 'roadmap'].forEach(tab => {
+    if (tab !== initialTab) {
+      document.getElementById(tab + '-tab').style.display = 'none';
+    }
+  });
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
+  });
 });
 </script>
 
